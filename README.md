@@ -70,10 +70,6 @@ comunicar com ela,
 para validação do CPF e geração do token JWT.
 
 ```bash
- sam build
- sam local invoke AuthCpfFunction --event event.json --env-vars env.json --add-host host.docker.internal:
-
-```bash
  mvn clean package -DskipTests
  sam build --debug
  sam local invoke AuthCpfFunction --event event.json --env-vars env.json --add-host host.docker.internal:172.17.0.1 --debug
