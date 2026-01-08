@@ -99,6 +99,6 @@ curl -i -X GET "http://localhost:8081/interno/clientes/12345678909" \
 Substitua `12345678909` pelo CPF que deseja autenticar.
 ---
 
-### Imagem da Requisição
+### Imagem da Requisição com retono do Token JWT
 
 [![Request](./docs/assets/req-lambda.png)](./docs/assets/req-lambda.png)
