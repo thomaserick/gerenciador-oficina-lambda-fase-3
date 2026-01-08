@@ -61,6 +61,18 @@ Para executar a Lambda localmente, é necessário configurar as seguintes variá
 - `JWT_SECRET`: Chave secreta para assinatura dos tokens JWT.
 - `INTERNAL_API_KEY`: Chave de API para autenticação interna com o Core.
 
+### 📄 Exemplo de `env.json`
+
+```json
+{
+  "AuthCpfFunction": {
+    "JWT_SECRET": "n7Q2zXE9+fR3GjG2Q1v9K2Wq4tYF8xX0Y0mK9P2qQ3w=",
+    "CORE_API_URL": "http://host.docker.internal:8081",
+    "INTERNAL_API_KEY": "k_live_9f3c2e8a7b1d4f6a9c0e5d2b8a1f7c3e6d4b9a2f0c8e1d7a5b6c4"
+  }
+}
+```    
+
 ### 🚀 Executando a Lambda Localmente
 
 Para executar a Lambda localmente usando o AWS SAM, utilize o seguinte comando:
