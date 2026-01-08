@@ -86,3 +86,19 @@ para validação do CPF e geração do token JWT.
  sam build --debug
  sam local invoke AuthCpfFunction --event event.json --env-vars env.json --add-host host.docker.internal:172.17.0.1 --debug
 ```
+
+### Consumindo a Lambda Localmente via cURL
+
+Após iniciar a Lambda localmente, você pode testá-la utilizando o comando `curl`:
+
+```bash
+curl -i -X GET "http://localhost:8081/interno/clientes/12345678909" \
+  -H "X-API-KEY: k_live_9f3c2e8a7b1d4f6a9c0e5d2b8a1f7c3e6d4b9a2f0c8e1d7a5b6c4"
+```
+
+Substitua `12345678909` pelo CPF que deseja autenticar.
+---
+
+### Imagem da Requisição
+
+[![Request](./docs/assets/req-lambda.png)](./docs/assets/req-lambda.png)
