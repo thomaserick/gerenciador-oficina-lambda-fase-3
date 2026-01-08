@@ -1,0 +1,92 @@
+name: Deploy Auth CPF Lambda
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+env:
+  PROJECT_NAME: 'gerenciador-oficina-lambda'
+  JAVA_VERSION: '17.0.13'
+  DISTRIBUTION: 'temurin'
+  AWS_REGION: 'us-east-1'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK ${{env.JAVA_VERSION}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.DISTRIBUTION}}
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn -B clean package -DskipTests
+
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{env.JAVA_VERSION}}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.DISTRIBUTION}}
+
+      - name: Run Unit Tests
+        run: mvn -B test
+
+  aws-deploy:
+    name: Deploy to AWS EKS
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      # 🔹 Configurar AWS CLI
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{env.AWS_REGION}}
+
+      # Setup SAM CLI
+      - name: Install AWS SAM CLI
+        uses: aws-actions/setup-sam@v2
+
+      - name: SAM Build
+        run: sam build
+
+      # SAM Deploy
+      - name: SAM Deploy
+        run: |
+          sam deploy \
+            --stack-name $STACK_NAME \
+            --region $AWS_REGION \
+            --capabilities CAPABILITY_IAM \
+            --no-confirm-changeset \
+            --no-fail-on-empty-changeset \
+            --parameter-overrides \
+              JwtSecret=${{ secrets.JWT_SECRET }} \
+              CoreApiUrl=${{ secrets.CORE_API_URL }} \
+              InternalApiKey=${{ secrets.INTERNAL_API_KEY }}
+
+          
+

@@ -1,0 +1,7 @@
+{
+  "body": "{\"cpf\":\"37401698854\"}",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}

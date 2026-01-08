@@ -1,0 +1,28 @@
+Parameters:
+  JwtSecret:
+    Type: String
+    NoEcho: true
+  CoreApiUrl:
+    Type: String
+  InternalApiKey:
+    Type: String
+    NoEcho: true
+
+Resources:
+  AuthCpfFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: java17
+      Handler: com.fiap.pj.core.handler.AuthCpfHandler::handleRequest
+      CodeUri: .
+      Environment:
+        Variables:
+          JWT_SECRET: !Ref JwtSecret
+          CORE_API_URL: !Ref CoreApiUrl
+          INTERNAL_API_KEY: !Ref InternalApiKey
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /auth/cpf
+            Method: post

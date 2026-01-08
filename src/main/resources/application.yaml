@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: gerenciador-oficina-lambda
+
+  jackson:
+    time-zone: UTC
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+server:
+  port: 8082
