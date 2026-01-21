@@ -57,6 +57,9 @@ jobs:
       - name: SAM Build
         run: sam build
 
+      - name: Validate SAM Template
+        run: sam validate
+
       # SAM Deploy
       - name: SAM Deploy
         run: |
