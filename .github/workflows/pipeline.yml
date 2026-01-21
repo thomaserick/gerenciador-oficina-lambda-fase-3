@@ -35,7 +35,7 @@ jobs:
         run: mvn -B clean package -DskipTests
 
   aws-deploy:
-    name: Deploy to AWS EKS
+    name: Deploy to AWS Lambda
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -61,8 +61,8 @@ jobs:
       - name: SAM Deploy
         run: |
           sam deploy \
-            --stack-name $PROJECT_NAME \
-            --region $AWS_REGION \
+            --stack-name ${{env.PROJECT_NAME}} \
+            --region ${{env.AWS_REGION}} \
             --capabilities CAPABILITY_IAM \
             --no-confirm-changeset \
             --no-fail-on-empty-changeset \
