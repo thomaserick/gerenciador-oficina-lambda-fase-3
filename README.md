@@ -40,6 +40,24 @@ exclusivamente para **consultas externas por CPF**.
 
 ---
 
+🚀 CI/CD Pipeline – GitHub Actions
+A aplicação conta com um pipeline de CI/CD configurado via GitHub Actions, que realiza as seguintes etapas:
+
+- Build e Testes automatizados
+- Deploy automático da lambda na AWS
+
+### Variaveis de Ambiente
+
+A pipeline utiliza as seguintes variáveis de ambiente armazenadas como Secrets no GitHub:
+
+| Nome                  | Descrição                                         |
+|-----------------------|---------------------------------------------------|
+| AWS_ACCESS_KEY_ID_    | Chave de acesso AWS                               |
+| AWS_SECRET_ACCESS_KEY | Chave secreta AWS                                 |
+| JWT_SECRET            | Chave secreta para assinatura dos tokens JWT      |
+| CORE_API_URL          | URL base da API do Core (Gerenciador de Oficina)  |
+| INTERNAL_API_KEY      | Chave de API para autenticação interna com o Core |
+
 ## ▶️ Execução Local
 
 ### ✅ Pré-requisitos
@@ -102,3 +120,7 @@ Substitua `12345678909` pelo CPF que deseja autenticar.
 ### Imagem da Requisição com retono do Token JWT
 
 [![Request](./docs/assets/req-lambda.png)](./docs/assets/req-lambda.png)
+
+### Imagem da Requisição na AWS com retono do Token JWT
+
+[![Request](./docs/assets/req-lambda-aws.png)](./docs/assets/req-lambda-aws.png)
