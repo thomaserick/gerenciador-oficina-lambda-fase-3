@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiap.pj.core.config.LambdaConfig;
+import com.fiap.pj.core.handler.AuthCpfResponse.AuthCpfResponseBody;
 import com.fiap.pj.core.usecase.AuthCpfUseCase;
 import com.fiap.pj.core.usecase.command.AutenticarCommand;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class AuthCpfHandler
         try {
             request = mapper.readValue((String) body, AuthCpfRequest.class);
         } catch (JsonProcessingException e) {
-            return new AuthCpfResponse(404, null);
+            return new AuthCpfResponse(404, new AuthCpfResponseBody(event.toString()));
         }
 
         String token = authCpfUseCase.handle(new AutenticarCommand(request.cpf()));
