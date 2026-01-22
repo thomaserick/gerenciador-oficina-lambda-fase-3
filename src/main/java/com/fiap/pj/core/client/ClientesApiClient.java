@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class ClientesApiClient {
 
@@ -16,6 +17,7 @@ public class ClientesApiClient {
     private final ObjectMapper objectMapper;
     private final String baseUrl;
     private final String apiKey;
+    private final Logger logger = Logger.getLogger(ClientesApiClient.class.getName());
 
     public ClientesApiClient(String baseUrl, String apiKey) {
         this.httpClient = HttpClient.newBuilder()
@@ -35,6 +37,9 @@ public class ClientesApiClient {
 
             var uri = URI.create(baseUrl + path);
 
+            logger.info("Uri: " + uri);
+            logger.info("API Key: " + apiKey);
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
                     .header(API_KEY_HEADER, apiKey)
@@ -51,7 +56,7 @@ public class ClientesApiClient {
 
             ClienteResponse cliente =
                     objectMapper.readValue(response.body(), ClienteResponse.class);
-            
+
             return Objects.nonNull(cliente);
 
         } catch (Exception e) {
