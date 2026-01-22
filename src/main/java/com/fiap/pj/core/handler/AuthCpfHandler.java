@@ -34,10 +34,10 @@ public class AuthCpfHandler
         try {
             request = mapper.readValue((String) body, AuthCpfRequest.class);
         } catch (JsonProcessingException e) {
-            return new AuthCpfResponse("");
+            return new AuthCpfResponse(404, null);
         }
 
         String token = authCpfUseCase.handle(new AutenticarCommand(request.cpf()));
-        return new AuthCpfResponse(token);
+        return AuthCpfResponse.from(token);
     }
 }

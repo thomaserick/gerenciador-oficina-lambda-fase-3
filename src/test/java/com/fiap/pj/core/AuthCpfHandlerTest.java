@@ -33,7 +33,7 @@ public class AuthCpfHandlerTest {
 
         AuthCpfResponse resp = handler.handleRequest(Map.of("body", "{\"cpf\":\"37401698854\"}"), null);
 
-        assertNotNull(resp.token());
+        assertNotNull(resp.body().token());
     }
 
 }
