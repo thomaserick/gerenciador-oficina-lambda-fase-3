@@ -18,6 +18,7 @@ Resources:
     Properties:
       Runtime: java17
       Handler: com.fiap.pj.core.handler.AuthCpfHandler::handleRequest
+      Timeout: 15
       CodeUri: .
       Environment:
         Variables:
