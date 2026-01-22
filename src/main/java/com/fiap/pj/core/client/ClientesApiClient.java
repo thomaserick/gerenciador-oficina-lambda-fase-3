@@ -36,10 +36,7 @@ public class ClientesApiClient {
         try {
 
             var uri = URI.create(baseUrl + path);
-
             logger.info("Uri: " + uri);
-            logger.info("API Key: " + apiKey);
-
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
                     .header(API_KEY_HEADER, apiKey)

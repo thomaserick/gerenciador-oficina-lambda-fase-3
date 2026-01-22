@@ -7,14 +7,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiap.pj.core.config.LambdaConfig;
 import com.fiap.pj.core.usecase.AuthCpfUseCase;
 import com.fiap.pj.core.usecase.command.AutenticarCommand;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
+@Slf4j
 public class AuthCpfHandler
         implements RequestHandler<Map<String, Object>, AuthCpfResponse> {
 
     private static final ObjectMapper mapper = new ObjectMapper();
     private final AuthCpfUseCase authCpfUseCase;
+    private final Logger logger = Logger.getLogger(AuthCpfHandler.class.getName());
 
     public AuthCpfHandler() {
         this.authCpfUseCase = LambdaConfig.authCpfUseCase();
@@ -29,6 +33,7 @@ public class AuthCpfHandler
             Map<String, Object> event,
             Context context
     ) {
+        logger.info(event.toString());
         Object body = event.get("body");
         AuthCpfRequest request;
         try {
